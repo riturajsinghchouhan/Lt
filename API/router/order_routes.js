@@ -14,9 +14,20 @@ router.post('/place', async (req, res) => {
   }
 });
 
+router.post('/cancel',async(req,res)=>{
+  try{
+    const {orderId}=req.body;
+    await OrderModel.updateOne({_id:orderId},{status:'Cancelled'});
+    res.json({success:true,message:'Order cancelled'});
+  }
+  catch (err) {
+    res.status(500).send({ success: false, message: 'Failed to place order' });
+  }
+})
+
 // Fetch All Orders (Admin)
 router.get('/all', async (req, res) => { 
-  console.log("h1")
+  //console.log("h1")
   const orders = await OrderModel.find().sort({ createdAt: -1 });
   res.send(orders);
 });

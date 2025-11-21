@@ -7,7 +7,7 @@ const userSchema=mongoose.Schema({
         type:String,
         require:[true,'name is required'],
         trim:true,
-        lowercase:true
+        
     },
     email:{
         type:String,

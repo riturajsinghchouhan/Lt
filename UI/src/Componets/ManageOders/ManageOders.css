@@ -17,7 +17,7 @@
   border-collapse: collapse;
   background-color: #fff;
   border-radius: 10px;
-  overflow: hidden;
+  overflow: hidden; /* This will be overridden on mobile */
 }
 
 .manage-orders-table th {
@@ -46,4 +46,38 @@
 .status-pending {
   color: orange;
   font-weight: 600;
+}
+
+/* --- Responsive Styles --- */
+
+@media (max-width: 768px) {
+  .manage-orders-wrapper {
+    padding: 15px; /* Reduce padding on smaller screens */
+  }
+
+  .manage-orders-title {
+    font-size: 1.5rem; /* Make title slightly smaller */
+    margin-bottom: 20px;
+  }
+
+  /* This makes the table a block element and allows it to scroll
+    horizontally if its content is wider than the screen.
+    This is the simplest way to make a complex table responsive
+    without altering the HTML structure.
+  */
+  .manage-orders-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto; /* Allows horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
+
+  .manage-orders-table th,
+  .manage-orders-table td {
+    white-space: nowrap; /* Prevents text from wrapping */
+  }
+
+  .manage-orders-select {
+    width: 100%; /* Make select boxes easier to tap */
+  }
 }

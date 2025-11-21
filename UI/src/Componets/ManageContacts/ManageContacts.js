@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import './ManageContacts.css'
 
 function ManageContacts() {
   const [contacts, setContacts] = useState([]);
@@ -11,9 +12,9 @@ function ManageContacts() {
   }, []);
 
   return (
-    <div className="container mt-5">
+    <div className="contacts-container mt-5">
       <h2>Contact Requests</h2>
-      <table className="table table-bordered">
+      <table className="contacts-table table-bordered">
         <thead>
           <tr>
             <th>Name</th><th>Email</th><th>Request</th><th>Service</th><th>Date</th>

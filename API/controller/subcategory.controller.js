@@ -33,9 +33,9 @@ export const save =async(req,res)=>{
 
 export var fetch=async(req,res)=>{
     var condition_obj=url.parse(req.url,true).query; 
-    console.log(condition_obj)   
+    //console.log(condition_obj)   
     var scList=await SubCategorySchemaModel.find(condition_obj);
-    console.log(scList)
+    //console.log(scList)
     if(scList.length!=0)
       res.status(200).json(scList);
     else

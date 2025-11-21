@@ -30,10 +30,14 @@ function ManageOrders() {
             <th>Cake</th>
             <th>Weight</th>
             <th>Qty</th>
+            <th>Message on cake</th>
             <th>Total</th>
             <th>Mode</th>
+            <th>Location</th>
             <th>Status</th>
             <th>Action</th>
+            <th>Phone</th>
+
           </tr>
         </thead>
         <tbody>
@@ -43,8 +47,10 @@ function ManageOrders() {
               <td>{order.cake}</td>
               <td>{order.weight}</td>
               <td>{order.quantity}</td>
+              <td>{order.message}</td>
               <td>₹{order.total}</td>
               <td>{order.paymentMode}</td>
+              <td>{order.location || 'N/A'}</td>
               <td className={order.status === 'Delivered' ? 'status-delivered' : 'status-pending'}>
                 {order.status}
               </td>
@@ -58,6 +64,7 @@ function ManageOrders() {
                   <option>Delivered</option>
                 </select>
               </td>
+              <td>{order.mobile}</td>
             </tr>
           ))}
         </tbody>
@@ -67,4 +74,3 @@ function ManageOrders() {
 }
 
 export default ManageOrders;
-

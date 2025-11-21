@@ -1,0 +1,69 @@
+/* Page wrapper */
+.custom-orders-page {
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+}
+
+.custom-orders-page h2 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+/* Orders container */
+.orders-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Individual order card */
+.order-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.order-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+/* Card text styling */
+.order-card p {
+  font-size: 14px;
+  margin: 6px 0;
+  color: #555;
+}
+
+.order-card b {
+  color: #333;
+}
+
+/* Cake image inside card */
+.order-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.order-card img:hover {
+  transform: scale(1.1);
+}
+
+/* Loading and no orders messages */
+.loading-message,
+.no-orders {
+  text-align: center;
+  font-size: 16px;
+  color: #777;
+  margin-top: 30px;
+}

@@ -1,0 +1,246 @@
+/* Payment.css - professional simple styles */
+
+.pg-container {
+  padding: 30px 16px;
+  display: flex;
+  justify-content: center;
+  font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+.pg-card {
+  width: 100%;
+  max-width: 1100px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(16, 24, 40, 0.08);
+}
+
+.pg-title {
+  text-align: left;
+  margin: 4px 0 18px 0;
+  font-weight: 600;
+  color: #111827;
+}
+
+.pg-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.pg-left {
+  flex: 2;
+}
+
+.pg-right {
+  flex: 1;
+}
+
+.pg-label {
+  display: block;
+  font-size: 13px;
+  color: #374151;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.pg-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e6e6e6;
+  outline: none;
+  font-size: 14px;
+  margin-bottom: 10px;
+  box-sizing: border-box; /* Added for consistent sizing */
+}
+
+.pg-input:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.08);
+}
+
+.pg-error {
+  color: #dc2626;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.pg-amount {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #f1f5f9;
+  margin-top: 8px;
+}
+
+.pg-amount-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.pg-flag {
+  font-size: 12px;
+  color: #065f46;
+  background: rgba(6, 95, 70, 0.08);
+  padding: 6px 8px;
+  border-radius: 999px;
+}
+
+.pg-methods {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0;
+  flex-wrap: wrap;
+}
+
+.pg-method {
+  border: 1px solid #e6e6e6;
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.pg-method.active {
+  border-color: #2563eb;
+  background: linear-gradient(180deg, #f0f7ff, #ffffff);
+  color: #1f2937;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.12);
+}
+
+.pg-method-panel {
+  margin-top: 8px;
+}
+
+.pg-inline {
+  display: flex;
+  gap: 8px;
+}
+
+/* Added to make inline children flexible */
+.pg-inline > div {
+  flex: 1;
+}
+
+.pg-note {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 6px;
+}
+
+.pg-info {
+  margin-top: 12px;
+  color: #065f46;
+  font-weight: 600;
+}
+
+.pg-actions {
+  margin-top: 16px;
+}
+
+.pg-pay-btn {
+  width: 100%;
+  padding: 12px 16px;
+  background: linear-gradient(90deg, #10b981, #059669);
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(6, 95, 70, 0.12);
+}
+
+.pg-summary {
+  background: #fafafa;
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid #f1f5f9;
+}
+
+.pg-summary h4 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+}
+
+.pg-summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+  font-size: 14px;
+  color: #374151;
+}
+
+.pg-divider {
+  height: 1px;
+  background: #e6e6e6;
+  margin: 12px 0;
+}
+
+.total {
+  font-weight: 800;
+  font-size: 16px;
+  color: #111827;
+}
+
+.pg-trust {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.shadow-sm {
+  box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .pg-row {
+    flex-direction: column;
+  }
+  
+  /* Show summary (right col) FIRST on mobile */
+  .pg-right {
+    order: 1;
+    width: 100%;
+    margin-bottom: 25px; /* Add space between blocks */
+  }
+  
+  /* Show form (left col) SECOND on mobile */
+  .pg-left {
+    order: 2;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .pg-container {
+    padding: 20px 10px; /* Less padding */
+  }
+
+  .pg-card {
+    padding: 15px; /* Less card padding */
+  }
+
+  .pg-title {
+    font-size: 1.25rem; /* Smaller title */
+  }
+
+  /* Stack inline fields (e.g., Expiry/CVC) */
+  .pg-inline {
+    flex-direction: column;
+    gap: 10px; /* Adjust gap for column */
+  }
+
+  .pg-pay-btn {
+    font-size: 15px;
+  }
+}

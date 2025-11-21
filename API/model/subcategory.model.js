@@ -6,13 +6,13 @@ const SubCategorySchema = mongoose.Schema({
   catnm: {
     type: String,
     required: [true, "Category name is required"],
-    lowercase: true,
+   
     trim: true
   },
   subcatnm: {
     type: String,
     required: [true, "Sub Category name is required"],
-    lowercase: true,
+    
     unique: true,
     trim: true
   },

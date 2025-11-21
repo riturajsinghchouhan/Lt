@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { userapi } from '../../Api_url';
+import { Link } from 'react-router-dom';
 import './Register.css'
 
 function Register() {
@@ -62,7 +63,8 @@ function Register() {
         </div>
         <button className="btn btn-success w-100" onClick={handleRegister}>Register</button>
         <p className="mt-3 text-center">
-          Already have an account? <a href="/login">Login</a>
+          Already have an account? 
+           <Link to='/login'>Login</Link>
         </p>
       </div>
     </div>

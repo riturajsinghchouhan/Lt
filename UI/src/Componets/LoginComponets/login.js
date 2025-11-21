@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { userapi } from '../../Api_url';
+import { Link } from 'react-router-dom';
 import './Login.css';
 
 function Login() {
@@ -71,7 +72,8 @@ function Login() {
         </div>
         <button className="love btn-primary w-100" onClick={handleLogin}>Login</button>
         <p className="mt-3 text-center">
-          Don't have an account? <a href="/register">Register</a>
+          Don't have an account? <Link to='/register'>register</Link>
+          
         </p>
       </div>
     </div>

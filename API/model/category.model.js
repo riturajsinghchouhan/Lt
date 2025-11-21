@@ -6,7 +6,7 @@ const CategorySchema = mongoose.Schema({
   catnm: {
     type: String,
     required: [true,"Category name is required"],
-    lowercase: true,
+    
     unique: true,
     trim: true
   },

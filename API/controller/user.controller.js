@@ -7,7 +7,7 @@ import userSchemaModel from '../model/user.model.js';
  export var save =async(req,res)=>{
     var userList = await userSchemaModel.find();
     var len =userList.length;
-     var _id = (len==0)?1:userList[len-1]._id+1;
+    var _id = (len==0)?1:userList[len-1]._id+1;
    var userDetail ={...req.body,"_id":_id,"role":"user","status":0,"info":Date()}; 
   //  console.log(userDetail) ;
    try{

@@ -1,0 +1,109 @@
+.admin-orders-container {
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.admin-orders-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #333;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.admin-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.admin-orders-table th,
+.admin-orders-table td {
+  padding: 12px 10px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.admin-orders-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  color: #555;
+}
+
+.cake-thumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.status-pending {
+  color: #d9534f;
+  font-weight: bold;
+}
+
+.status-delivered {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.status-select {
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+/* Cake image thumbnail */
+.cake-thumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.cake-thumbnail:hover {
+  transform: scale(1.1); /* small zoom on hover */
+}
+
+/* Modal overlay */
+.image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+/* Enlarged image */
+.modal-image {
+  max-width: 80%;
+  max-height: 80%;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+
+@media (max-width: 1200px) {
+  .admin-orders-table th,
+  .admin-orders-table td {
+    font-size: 12px;
+    padding: 8px 6px;
+  }
+  .cake-thumbnail {
+    width: 50px;
+    height: 50px;
+  }
+}

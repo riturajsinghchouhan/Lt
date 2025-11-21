@@ -21,7 +21,6 @@ function Open() {
         }
       }
     } catch (e) {
-      console.log(e);
       console.error("Failed to parse user-info from localStorage", e);
     }
   }, []);
@@ -35,17 +34,15 @@ function Open() {
     if (!user) {
       navigate('/login');
     } else {
-    navigate('/payment', {
-  state: {
-    cake: state.subcatnm,
-    quantity,
-    weight: selectedWeight,
-    message,
-    total: (discountedPrice * quantity).toFixed(0)
-  }
-});
-
-
+      navigate('/payment', {
+        state: {
+          cake: state.subcatnm,
+          quantity,
+          weight: selectedWeight,
+          message,
+          total: (discountedPrice * quantity).toFixed(0)
+        }
+      });
     }
   };
 
@@ -82,9 +79,10 @@ function Open() {
         </div>
 
         <div className="col-md-6">
-          <h3 className="fw-bold">{state.subcatnm} Cake</h3>
+          <h3 className="fw-bold">{state.subcatnm}</h3>
           <h4 className="text-danger fw-semibold">
-            ₹{(discountedPrice * quantity).toFixed(0)} <del className="text-muted fs-6 ms-2">₹{(price * quantity).toFixed(0)}</del>
+            ₹{(discountedPrice * quantity).toFixed(0)} 
+            <del className="text-muted fs-6 ms-2">₹{(price * quantity).toFixed(0)}</del>
             <span className="badge bg-success ms-2">{discountPercentage}% OFF</span>
           </h4>
 
@@ -101,6 +99,7 @@ function Open() {
                 <option value="1.5kg">1.5kg</option>
               </select>
             </div>
+
             <div className="col">
               <label className="form-label">Message to write on Cake</label>
               <input
@@ -126,18 +125,7 @@ function Open() {
 
           <div className="accordion mt-4" id="cakeDetails">
             <div className="accordion-item">
-              <h2 className="accordion-header" id="headingDetails">
-                <button
-                  className="accordion-button"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseDetails"
-                  aria-expanded="true"
-                  aria-controls="collapseDetails"
-                >
-                  Product Details
-                </button>
-              </h2>
+              <h2 className="accordion-header" id="headingDetails"></h2>
               <div
                 id="collapseDetails"
                 className="accordion-collapse collapse show"
