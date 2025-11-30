@@ -9,12 +9,12 @@ import "./model/connection.js";
 
 const app = express();
 
-// Middleware
+// Middleware;
 app.use(cors({
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  origin: "https://vercel-frontend-sigma-ten.vercel.app",
+  credentials: true,
 }));
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
