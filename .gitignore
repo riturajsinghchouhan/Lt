@@ -1,0 +1,40 @@
+# ===== Frontend (React) =====
+
+
+# ===== Backend (Node/Express) =====
+api/node_modules/
+api/package-lock.json
+api/uploads/
+api/logs/
+api/tmp/
+api/.env
+api/.env.local
+
+# ===== Common =====
+node_modules/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ===== System Files =====
+.DS_Store
+Thumbs.db
+
+# ===== Editor / IDE =====
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ===== Certificates / Keys =====
+*.pem
+*.key
+*.crt
+
+# ===== Misc =====
+.env
+.env.*
