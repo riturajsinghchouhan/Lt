@@ -2,20 +2,27 @@ import express from "express";
 import cors from "cors";
 import fileUpload from "express-fileupload";
 import dotenv from "dotenv";
-
 dotenv.config();
 
 import "./model/connection.js";
 
 const app = express();
 
-// Middleware;
+// 💥 FIX: Proper CORS for Vercel + Render
 app.use(cors({
-  origin: "https://vercel-frontend-sigma-ten.vercel.app",
-  credentials: true,
+  origin: [
+    "https://vercel-frontend-sigma-ten.vercel.app",
+    "http://localhost:3000"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 }));
 
+// OPTIONS (important for preflight)
+app.options("*", cors());
 
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -28,8 +35,8 @@ app.use(
   })
 );
 
-// Static uploads
-app.use("/uploads", express.static(process.env.UPLOAD_PATH));
+// Static uploads (Render allows this)
+app.use("/uploads", express.static("uploads"));
 
 // Routes
 import distanceRouter from "./router/distanceRoute.js";
@@ -40,7 +47,8 @@ import orderRoutes from "./router/order_routes.js";
 import contactRoutes from "./router/contact_routes.js";
 import adRouter from "./router/ad.router.js";
 import customCakeRouter from "./router/customCakeRoutes.js";
-import notificationRouter from "./router/notifiaction_routes.js"
+import notificationRouter from "./router/notifiaction_routes.js";
+
 app.use("/distance", distanceRouter);
 app.use("/user", userRouter);
 app.use("/category", categoryRouter);
@@ -50,12 +58,10 @@ app.use("/contact", contactRoutes);
 app.use("/ads", adRouter);
 app.use("/customcake", customCakeRouter);
 app.use("/notifications", notificationRouter);
+
 // Default route
 app.get("/", (req, res) => {
-  res.send("Backend is running");
+  res.send("Backend is running on Render + Vercel");
 });
 
-// Start server
-app.listen(process.env.PORT || 4000, () => {
-  console.log(`🚀 Server running at http://localhost:${process.env.PORT}`);
-});
+export default app;
