@@ -8,33 +8,25 @@ import "./model/connection.js";
 
 const app = express();
 
-/* ---------------------------------------------------
-   ⭐ CORS FIX (Final + Correct)
------------------------------------------------------- */
-app.use(
-  cors({
-    origin: [
-      "https://vercel-frontend-sigma-ten.vercel.app", // your deployed frontend
-      "http://localhost:3000", // local development
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  })
-);
+// 💥 FIX: Proper CORS for Vercel + Render
+app.use(cors({
+  origin: [
+    "https://vercel-frontend-sigma-ten.vercel.app",
+    "http://localhost:3000"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}));
 
-// ⭐ Preflight request (OPTIONS)
+// OPTIONS (important for preflight)
 app.options("*", cors());
 
-/* ---------------------------------------------------
-   ⭐ Middleware
------------------------------------------------------- */
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-/* ---------------------------------------------------
-   ⭐ File Upload (Render supports this)
------------------------------------------------------- */
+// File Upload
 app.use(
   fileUpload({
     useTempFiles: true,
@@ -43,14 +35,10 @@ app.use(
   })
 );
 
-/* ---------------------------------------------------
-   ⭐ Serve Static Uploads Folder
------------------------------------------------------- */
+// Static uploads (Render allows this)
 app.use("/uploads", express.static("uploads"));
 
-/* ---------------------------------------------------
-   ⭐ Routes
------------------------------------------------------- */
+// Routes
 import distanceRouter from "./router/distanceRoute.js";
 import userRouter from "./router/user.router.js";
 import categoryRouter from "./router/category.router.js";
@@ -71,17 +59,9 @@ app.use("/ads", adRouter);
 app.use("/customcake", customCakeRouter);
 app.use("/notifications", notificationRouter);
 
-/* ---------------------------------------------------
-   ⭐ Default Route
------------------------------------------------------- */
+// Default route
 app.get("/", (req, res) => {
-  res.json({
-    status: true,
-    message: "Backend is running on Render + Vercel",
-  });
+  res.send("Backend is running on Render + Vercel");
 });
 
-/* ---------------------------------------------------
-   ⭐ Export for Render
------------------------------------------------------- */
 export default app;
