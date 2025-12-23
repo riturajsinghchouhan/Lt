@@ -1,0 +1,18 @@
+.rating-stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 5px;
+}
+
+.rating-text {
+  font-size: 14px;
+  color: #555;
+}
+
+.price-text {
+  font-weight: bold;
+  color: #d32f2f;
+  margin-top: 5px;
+  font-size: 18px;
+}

@@ -1,0 +1,139 @@
+/* Wrapper */
+.cart-wrapper {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Title */
+.cart-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/* Table Styling */
+.table-container {
+  overflow-x: auto;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.cart-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #eee;
+  color: #777;
+}
+
+.cart-table td {
+  padding: 14px;
+  border-bottom: 1px solid #f3f3f3;
+}
+
+/* Product image */
+.cart-img {
+  width: 55px;
+  height: 55px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+/* Qty Box */
+.qty-box {
+  width: 45px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  text-align: center;
+  border-radius: 4px;
+}
+
+/* Remove Button */
+.remove-x {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Cart Total Box */
+.cart-total-box {
+  margin-top: 40px;
+  background: #fff;
+  padding: 25px;
+  max-width: 400px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+}
+
+.cart-total-box h3 {
+  margin-bottom: 15px;
+  font-size: 22px;
+}
+
+.cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.total-bold {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Checkout Button */
+.checkout-button {
+  width: 100%;
+  background: #ff6a00;
+  color: #fff;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 15px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Empty text */
+.empty-text {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 18px;
+}
+.add-more-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px;
+  background: #ff9800;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.add-more-btn:hover {
+  background: #e68a00;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cart-table th,
+  .cart-table td {
+    font-size: 14px;
+  }
+
+  .cart-total-box {
+    width: 100%;
+  }
+}

@@ -1,0 +1,37 @@
+# ===== Frontend (React) =====
+ui/node_modules/
+ui/build/
+ui/.cache/
+ui/.env
+ui/.env.local
+ui/.env.development
+ui/.env.production
+ui/.env.test
+# ===== Common =====
+node_modules/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ===== System Files =====
+.DS_Store
+Thumbs.db
+
+# ===== Editor / IDE =====
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ===== Certificates / Keys =====
+*.pem
+*.key
+*.crt
+
+# ===== Misc =====
+.env
+.env.*

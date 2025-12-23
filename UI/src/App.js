@@ -26,6 +26,7 @@ import ReviewOrder from './Componets/ReviewOrderComp/ReviewOrder';
 import DistanceChecker from './Componets/DistanceChecker/DistanceChecker';
 import AdminCustomOrders from './Componets/AdminCustomOrders/AdminCustomOrders';
 import UserCustomOrders from './Componets/UserCustomOrComp/UserCustomOrders';
+import AddToCart from './Componets/AddToCart/AddToCart';
 function App(){
   return (
     <>
@@ -38,6 +39,7 @@ function App(){
         <Route path='/login' element={<Login />} />
         <Route path='/Register' element={<Register />} />
         <Route path='/admin/manage-ads' element={<ManageAds />} />
+        <Route path='/cart' element={<AddToCart/>}/>
         <Route path='/product' element={<Open />} />
         <Route path='/category/:catnm' element={<Regular />} />
         <Route path='/add-category' element={<AddCategory />} />

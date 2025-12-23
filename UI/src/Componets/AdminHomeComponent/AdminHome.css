@@ -1,0 +1,81 @@
+.admin-home-page {
+  padding: 30px;
+}
+
+/* Title */
+.welcome-title {
+  text-align: center;
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+/* Notification Section (NORMAL ON-PAGE BOX) */
+.notif-section {
+  width: 80%;
+  max-width: 900px;
+  margin: auto;
+  background: white;
+  padding: 20px 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.notif-main-title {
+  font-size: 22px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 8px;
+}
+
+.notif-empty {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+}
+
+/* Each Notification Row */
+.notif-row {
+  display: flex;
+  gap: 15px;
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  border-radius: 5px;
+}
+
+.notif-row:last-child {
+  border-bottom: none;
+}
+
+/* Tag (Cancelled / New) */
+.notif-tag {
+  min-width: 120px;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.notif-tag.order_cancel {
+  background: #ffe6e6;
+  color: #d9534f;
+}
+
+.notif-tag.new_order {
+  background: #e0f7e8;
+  color: #3c9a5f;
+}
+
+/* Message */
+.notif-content {
+  flex: 1;
+}
+
+.notif-message {
+  font-size: 15px;
+  margin: 0;
+}
+
+.notif-time {
+  color: gray;
+  font-size: 12px;
+}

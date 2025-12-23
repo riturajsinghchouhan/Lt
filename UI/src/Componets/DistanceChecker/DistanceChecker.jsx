@@ -1,45 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { orderapi } from "../../Api_url";
 
 const DistanceChecker = () => {
+  const { state } = useLocation();
   const [userAddress, setUserAddress] = useState("");
   const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const userId = localStorage.getItem("_id"); // user id from localStorage
+  const [loading, setLoading] = useState(false);
 
-  // Fetch latest order address from database
   useEffect(() => {
-    const fetchUserAddress = async () => {
-      try {
-        const res = await axios.get(`${orderapi}orders?userId=${userId}`);
-        if (res.data && res.data.length > 0) {
-          // Get last order (latest)
-          const lastOrder = res.data[res.data.length - 1];
-          if (lastOrder.location) {
-            setUserAddress(lastOrder.location);
-            console.log("✅ User Address (from DB):", lastOrder.location); // 👈 Console log here
-          } else {
-            console.warn("⚠️ No address found in the latest order.");
-            setError("No address found in your latest order.");
-          }
-        } else {
-          console.warn("⚠️ No orders found for this user.");
-          setError("No orders found for your account.");
-        }
-      } catch (err) {
-        console.error("❌ Error fetching orders:", err);
-        setError("Failed to fetch order details.");
-      }
-    };
-
-    if (userId) fetchUserAddress();
-  }, [userId]);
+    if (!state || !state.userAddress) {
+      setError("No address received. Please select an order.");
+      return;
+    }
+    setUserAddress(state.userAddress);
+  }, [state]);
 
   const handleCheckDistance = async () => {
     if (!userAddress) {
-      setError("User address not found in your order data.");
+      setError("No address available.");
       return;
     }
 
@@ -52,85 +32,51 @@ const DistanceChecker = () => {
         userAddress,
       });
       setResult(res.data);
-      console.log("📦 Distance API Response:", res.data); // 👈 Also log API response
     } catch (err) {
-      console.error("❌ Distance API Error:", err);
-      setError("Failed to get distance. Please check the server.");
+      console.error("Distance error:", err);
+      setError("Failed to calculate distance.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "500px",
-        margin: "40px auto",
-        padding: "20px",
-        background: "#fff8f0",
-        borderRadius: "12px",
-        boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-        textAlign: "center",
-      }}
-    >
-      <h2 style={{ color: "#ff6f00" }}>🚚 Delivery Distance Checker</h2>
+    <div style={{ padding: 20, maxWidth: 500, margin: "0 auto" }}>
+      <h2>🚚 Delivery Distance Checker</h2>
 
-      <div style={{ marginTop: "15px" }}>
-        <input
-          type="text"
-          value={userAddress}
-          readOnly
-          style={{
-            width: "100%",
-            padding: "10px",
-            borderRadius: "8px",
-            border: "1px solid #ccc",
-            background: "#f9f9f9",
-          }}
-        />
-      </div>
+      <input
+        type="text"
+        value={userAddress}
+        readOnly
+        style={{
+          width: "100%",
+          padding: 10,
+          marginTop: 10,
+          border: "1px solid #ccc",
+        }}
+      />
 
       <button
         onClick={handleCheckDistance}
-        disabled={loading || !userAddress}
         style={{
-          marginTop: "15px",
-          padding: "10px 20px",
-          background: "#ff6f00",
-          color: "white",
+          marginTop: 20,
+          background: "orange",
+          padding: 10,
           border: "none",
-          borderRadius: "8px",
-          cursor: "pointer",
+          color: "#fff",
         }}
       >
-        {loading ? "Calculating..." : "Check Distance"}
+        {loading ? "Checking..." : "Check Distance"}
       </button>
 
-      {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
       {result && (
-        <div
-          style={{
-            marginTop: "25px",
-            background: "#fff3e0",
-            padding: "15px",
-            borderRadius: "10px",
-            textAlign: "left",
-          }}
-        >
-          <h3>📍 Delivery Details</h3>
-          <p>
-            <strong>Bakery:</strong> {result.bakeryAddress}
-          </p>
-          <p>
-            <strong>Your Address:</strong> {result.userAddress}
-          </p>
-          <p>
-            <strong>Distance:</strong> {result.distance}
-          </p>
-          <p>
-            <strong>Estimated Time:</strong> {result.time}
-          </p>
+        <div style={{ marginTop: 20, background: "#eee", padding: 10 }}>
+          <p><b>Bakery:</b> {result.bakeryAddress}</p>
+          <p><b>Your Address:</b> {result.userAddress}</p>
+          <p><b>Distance:</b> {result.distance}</p>
+          <p><b>ETA:</b> {result.time}</p>
         </div>
       )}
     </div>

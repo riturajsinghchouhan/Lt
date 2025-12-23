@@ -3,6 +3,7 @@ import {
   placeCustomCake,
   getAllCustomOrders,
   getUserCustomOrders,
+   updateCustomOrderStatus
 } from "../controller/customCakeController.js";
 
 const router = express.Router();
@@ -15,5 +16,8 @@ router.get("/all", getAllCustomOrders);
 
 // User-specific orders
 router.get('/user/:userId', getUserCustomOrders);
+
+router.put("/status/:id", updateCustomOrderStatus);
+
 
 export default router;

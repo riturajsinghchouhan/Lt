@@ -85,23 +85,53 @@ export const deletUser = async (req, res) => {
 };
 
 
-    export const login =async(req,res)=>{
-        //console.log("h1");
+    // export const login =async(req,res)=>{
+    //     //console.log("h1");
       
-      var userDetail = {...req.body,"status":1};        
-       //console.log(userDetail);
-     var userList =await userSchemaModel.find(userDetail);
-     //console.log(userList);
-     if(userList.length!=0)
-     {
-       const payload ={"subject":userList[0].email};
-       const key =rs.generate();
-       const token = jwt.sign(payload,key);
-       res.status(200).json({"token":token,"userList":userList[0]}); 
-     }
-     else
-     {
-       res.status(500).json({"token":"token error"});
-     }
+    //   var userDetail = {...req.body,"status":1};        
+    //    //console.log(userDetail);
+    //  var userList =await userSchemaModel.find(userDetail);
+    //  //console.log(userList);
+    //  if(userList.length!=0)
+    //  {
+    //    const payload ={"subject":userList[0].email};
+    //    const token = jwt.sign(payload, process.env.JWT_SECRET);
+    //    res.status(200).json({"token":token,"userList":userList[0]}); 
+    //  }
+    //  else
+    //  {
+    //    res.status(500).json({"token":"token error"});
+    //  }
+    // }
+
+export const login = async(req,res)=>{
+  try{
+    const {email,password} =req.body;
+
+    const user = await userSchemaModel.findOne({email});
+    if(!user){
+      return res.status(404).json({msg:"User not found"});
     }
 
+    const isMatch = await bcrypt.compare(password,user.password);
+    if(!isMatch){
+      return res.status(401).json({msg:"invalif Password"});
+    }
+
+    const token =jwt.sign(
+      {id:user._id,email:user.email},
+      process.env.JWT_SECRET,
+      {expiresIn:"1d"}
+    );
+
+    res.status(200).json({
+      msg:"Login Successful",
+      token:token,
+      user:user
+    })
+
+  }catch(err){
+    res.status(500).json({msg:"Login Failed ",error:err.message});
+  }
+
+};

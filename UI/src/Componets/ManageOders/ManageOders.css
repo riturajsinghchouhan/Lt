@@ -1,3 +1,4 @@
+/* MAIN WRAPPER */
 .manage-orders-wrapper {
   background-color: #fffefc;
   padding: 30px;
@@ -5,39 +6,86 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* TITLE */
 .manage-orders-title {
   text-align: center;
   color: #d35400;
   font-weight: 700;
   margin-bottom: 25px;
+  font-size: 28px;
 }
 
+/* TABLE */
 .manage-orders-table {
   width: 100%;
   border-collapse: collapse;
   background-color: #fff;
   border-radius: 10px;
-  overflow: hidden; /* This will be overridden on mobile */
+  overflow: hidden;
 }
 
 .manage-orders-table th {
   background-color: #f39c12;
   color: #fff;
   padding: 10px;
+  font-weight: 600;
 }
 
 .manage-orders-table td {
   text-align: center;
   padding: 10px;
   border: 1px solid #eee;
+  font-size: 14px;
 }
 
-.manage-orders-select {
-  padding: 5px;
-  border-radius: 5px;
+/* INPUT / SELECT */
+.manage-orders-select,
+.input-year,
+.input-month,
+.input-search {
+  padding: 6px 8px;
+  border-radius: 6px;
   border: 1px solid #ccc;
+  font-size: 14px;
 }
 
+.input-search {
+  width: 170px;
+}
+
+/* BUTTONS */
+.filter-btn,
+.export-btn,
+.invoice-btn,
+.top-btn {
+  padding: 7px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.filter-btn {
+  background: #4caf50;
+  color: #fff;
+}
+
+.export-btn {
+  background: #de6200;
+  color: white;
+}
+
+.invoice-btn {
+  background: #de6200;
+  color: white;
+}
+
+.top-btn {
+  background: #de6200;
+  color: white;
+}
+
+/* STATUS COLORS */
 .status-delivered {
   color: green;
   font-weight: 600;
@@ -48,36 +96,110 @@
   font-weight: 600;
 }
 
-/* --- Responsive Styles --- */
+.status-cancelled {
+  color: red;
+  font-weight: 600;
+}
 
+/* FILTER BAR (RESPONSIVE) */
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+/* SUMMARY BOX */
+.simple-summary {
+  background: #fff;
+  padding: 12px 15px;
+  margin: 10px 0 20px 0;
+  border-radius: 8px;
+  display: flex;
+  gap: 20px;
+  font-size: 15px;
+  font-weight: 500;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+  flex-wrap: wrap;
+}
+
+/* TOP CUSTOMERS BOX */
+.top-box {
+  background: #fff;
+  padding: 15px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/**********************************
+    RESPONSIVE DESIGN
+**********************************/
+
+/* Tablets and small devices */
 @media (max-width: 768px) {
+
   .manage-orders-wrapper {
-    padding: 15px; /* Reduce padding on smaller screens */
+    padding: 15px;
   }
 
   .manage-orders-title {
-    font-size: 1.5rem; /* Make title slightly smaller */
-    margin-bottom: 20px;
+    font-size: 22px;
   }
 
-  /* This makes the table a block element and allows it to scroll
-    horizontally if its content is wider than the screen.
-    This is the simplest way to make a complex table responsive
-    without altering the HTML structure.
-  */
+  .filter-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .input-search,
+  .manage-orders-select,
+  .input-year,
+  .input-month,
+  .filter-btn,
+  .export-btn,
+  .top-btn {
+    width: 100%;
+  }
+
+  .simple-summary {
+    flex-direction: column;
+    gap: 8px;
+    font-size: 14px;
+    text-align: left;
+  }
+
+  /* Make table horizontally scrollable */
   .manage-orders-table {
     display: block;
     width: 100%;
-    overflow-x: auto; /* Allows horizontal scrolling */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .manage-orders-table th,
   .manage-orders-table td {
-    white-space: nowrap; /* Prevents text from wrapping */
+    white-space: nowrap;
+  }
+}
+
+/* Very small screens (Phones < 480px) */
+@media (max-width: 480px) {
+  .manage-orders-title {
+    font-size: 20px;
   }
 
-  .manage-orders-select {
-    width: 100%; /* Make select boxes easier to tap */
+  .filter-container {
+    gap: 6px;
+  }
+
+  .invoice-btn {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  td, th {
+    font-size: 12px;
   }
 }

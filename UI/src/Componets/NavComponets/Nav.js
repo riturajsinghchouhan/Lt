@@ -7,6 +7,8 @@ function Nav() {
   const [role, setRole] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [cartCount, setCartCount] = useState(0); // ⭐ Cart Count
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -15,6 +17,11 @@ function Nav() {
     setRole(storedRole?.toLowerCase());
     setMenuOpen(false);
     setOpenDropdown(null);
+
+    // ⭐ Load cart count from localStorage
+    const count = localStorage.getItem("cartCount");
+    if (count) setCartCount(Number(count));
+
   }, [location]);
 
   const handleLogout = () => {
@@ -46,12 +53,12 @@ function Nav() {
                 )}
 
                 <ul className="nav" style={{ display: menuOpen ? 'block' : '' }}>
+                  
+                  {/* ======================= ADMIN MENU ======================= */}
                   {role === 'admin' ? (
                     <>
                       <li><Link to="/admin">Admin Home</Link></li>
-                       
-                       
-                      {/* Master Data Dropdown */}
+
                       <li
                         className={`dropdown ${openDropdown === 'master' ? 'open' : ''}`}
                         onClick={() => toggleDropdown('master')}
@@ -61,11 +68,9 @@ function Nav() {
                           <li><Link to="/add-category">Add Category</Link></li>
                           <li><Link to="/add-subcategory">Add Subcategory</Link></li>
                           <li><Link to="/admin/manage-ads">Manage ADS</Link></li>
-                          
                         </ul>
                       </li>
 
-                      {/* Orders & Ads Dropdown */}
                       <li
                         className={`dropdown ${openDropdown === 'orders' ? 'open' : ''}`}
                         onClick={() => toggleDropdown('orders')}
@@ -76,8 +81,6 @@ function Nav() {
                           <li><Link to="/all_custom_oders">Custom Cake Orders</Link></li>
                           <li><Link to="/admin/contacts">Manage Contacts</Link></li>
                           <li><Link to="/manage-users">Manage Users</Link></li>
-
-                         
                         </ul>
                       </li>
 
@@ -92,6 +95,8 @@ function Nav() {
                       </li>
                     </>
                   ) : (
+
+                    /* ======================= USER MENU ======================= */
                     <>
                       <li><Link to="/">Home</Link></li>
                       <li><Link to="/about">About Us</Link></li>
@@ -102,6 +107,14 @@ function Nav() {
                           <li><Link to="/orders">My Orders</Link></li>
                           <li><Link to="/customcake">Customize Your Cake</Link></li>
                           <li><Link to="/my-custom-orders">My Custom Cakes</Link></li>
+
+                          {/* ⭐ Add to Cart Button */}
+                          <li>
+                            <Link to="/cart" className="cart-link">
+                              🛒 Cart <span className="cart-badge">{cartCount}</span>
+                            </Link>
+                          </li>
+
                           <li>
                             <button
                               onClick={handleLogout}
@@ -116,8 +129,9 @@ function Nav() {
 
                       {!role && (
                         <>
-                          <li><Link to="/register">Register</Link></li>
                           <li><Link to="/login">Login</Link></li>
+                          <li><Link to="/register">Register</Link></li>
+                          
                         </>
                       )}
                     </>
@@ -131,6 +145,7 @@ function Nav() {
                 >
                   <span>Menu</span>
                 </a>
+
               </nav>
             </div>
           </div>
