@@ -101,7 +101,12 @@ function CustomCake() {
       const res = await axios.post(
         "http://localhost:3001/customcake/place-custom",
         data,
-        { headers: { "Content-Type": "multipart/form-data" } }
+        {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  }
+
       );
 
       setLoading(false);

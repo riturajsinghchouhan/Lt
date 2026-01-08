@@ -1,44 +1,68 @@
 import mongoose from "mongoose";
 import mongooseUniqueValidator from "mongoose-unique-validator";
 
-const userSchema=mongoose.Schema({
-    _id :Number,
-    name:{
-        type:String,
-        require:[true,'name is required'],
-        trim:true,
-        
-    },
-    email:{
-        type:String,
-        require:[true,'email is required'],
-        unique:true,
-        trim:true,
-        lowercase:true
-    },
-    password:{
-        type:String,
-        require:[true,'passowrd is required'],
-        minlength:5,
-        maxlength:10
-    },
-    mobile:{
-        type:String,
-        require:[true,'mobile is required']
-    },
-    address:{
-        type:String,
-        require:[true,'mobile is required'],
-        trim:true
+const userSchema = new mongoose.Schema(
+  {
+    _id: {
+      type: Number,
+      required: true,
     },
 
-   role:String,
-   status:Number,
-   info:String
+    name: {
+      type: String,
+      required: [true, "Name is required"],
+      trim: true,
+    },
+
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+      trim: true,
+      lowercase: true,
+    },
+
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+      // ❌ minlength/maxlength REMOVED (bcrypt hash ~60 chars)
+    },
+
+    mobile: {
+      type: String,
+      required: [true, "Mobile number is required"],
+    },
+
+    address: {
+      type: String,
+      required: [true, "Address is required"],
+      trim: true,
+    },
+
+    role: {
+      type: String,
+      default: "user",
+    },
+
+    status: {
+      type: Number,
+      default: 0,
+    },
+
+    info: {
+      type: String,
+    },
+  },
+  {
+    timestamps: true, // ✅ createdAt, updatedAt
+  }
+);
+
+// ✅ apply unique validator to SCHEMA (not mongoose)
+userSchema.plugin(mongooseUniqueValidator, {
+  message: "{PATH} already exists.",
 });
-//to apply unique validator
-mongoose.plugin(mongooseUniqueValidator);
 
-const userSchemaModel=mongoose.model('user_collection',userSchema);
+const userSchemaModel = mongoose.model("user_collection", userSchema);
 
 export default userSchemaModel;
