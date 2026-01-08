@@ -1,4 +1,5 @@
 import express from "express";
+import authMiddleware from "../middleware/authMiddleware.js";
 import {
   placeCustomCake,
   getAllCustomOrders,
@@ -9,7 +10,7 @@ import {
 const router = express.Router();
 
 // Place custom cake order
-router.post("/place-custom", placeCustomCake);
+router.post("/place-custom",authMiddleware, placeCustomCake);
 
 // Admin: fetch all orders
 router.get("/all", getAllCustomOrders);

@@ -7,9 +7,9 @@ export const placeCustomCake = async (req, res) => {
   try {
         console.log("✅ req.user:", req.user);
     // 🧑 Get user info from auth middleware (logged-in user)
-    const { _id: userId, name, email, phone, address: userAddress } = req.user;
+    const { _id: userId, name, email,mobile, address: userAddress } = req.user;
     
-console.log("👤 User Details:", { userId, name, email, phone, userAddress });
+console.log("👤 User Details:", { userId, name, email, mobile, userAddress });
     // Get other cake order details from request body
     const {
       cakeType,
@@ -50,7 +50,7 @@ console.log("👤 User Details:", { userId, name, email, phone, userAddress });
     const order = new CustomCake({
       userId,
       name,                  // from logged-in user
-      mobile: phone,         // from logged-in user
+      mobile: mobile,         // from logged-in user
       address: deliveryAddress || userAddress, // use delivery address if provided
       cakeType,
       cakeName,

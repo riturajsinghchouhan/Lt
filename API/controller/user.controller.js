@@ -1,137 +1,169 @@
-import '../model/connection.js';
-import url from 'url';
-import jwt from 'jsonwebtoken';
-import rs from 'randomstring';
-import userSchemaModel from '../model/user.model.js';
+import "../model/connection.js";
+import url from "url";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import userSchemaModel from "../model/user.model.js";
 
- export var save =async(req,res)=>{
-    var userList = await userSchemaModel.find();
-    var len =userList.length;
-    var _id = (len==0)?1:userList[len-1]._id+1;
-   var userDetail ={...req.body,"_id":_id,"role":"user","status":0,"info":Date()}; 
-  //  console.log(userDetail) ;
-   try{
-    const users =await userSchemaModel.create(userDetail);
-    //console.log(userDetail)
-    res.status(201).json({"status":"Resoure reated successfully"});
-   }
-   catch(err)
-   { 
-    
-    console.log(err);
-    res.status(500).json({"status":"false"});
-   }
-   }
-
-   export const fetch = async(req,res)=>{
-    //  console.log("h1");
-     var condition_obj = url.parse(req.url,true).query;
-      //console.log(condition_obj);
-      var user =await userSchemaModel.find(condition_obj);
-      //console.log(user);
-     if(user.length!=0)
-      {
-        res.status(200).json(user);
-      }
-      else
-      {
-        res.status(404).json({"result":"user not found in database"});
-      }
-
-  }
-
-  // export const update =async(req,res)=>{
-  //  //console.log("h1");
-  //   var condition_obj =req.body.condition_obj;    
-  //   //console.log(condition_obj);
-  //    var user= await userSchemaModel.findOne(condition_obj);
-  //    //console.log(user);
-  //     if(user)
-  //     {
-  //       var update_user = await userSchemaModel.updateOne(req.body.condition_obj,{$set:req.body.content_obj});
-  //         if(update_user)
-  //         {
-  //           res.status(200).json({"result":"user updated succesffully"})
-         
-  //         } 
-  //         else
-  //         {
-  //           res.status(500).json({"result":"user not updated succesffully"})
-  //         }
-  //     } 
-  //     else
-  //     {
-  //       res.status(404).json({"result":"user not found in databse"});
-  //     }
-  //   }
-
-
-
-export const deletUser = async (req, res) => {
-  const { _id } = req.body;
-
+/* =========================
+   REGISTER USER
+========================= */
+export const save = async (req, res) => {
   try {
-    const user = await userSchemaModel.findById(_id);
-    if (!user) {
-      return res.status(404).json({ result: 'User not found in database' });
+    const { email, password } = req.body;
+
+    // 🔎 Check duplicate email
+    const existingUser = await userSchemaModel.findOne({
+      email: email.toLowerCase(),
+    });
+
+    if (existingUser) {
+      return res.status(409).json({ msg: "Email already registered" });
     }
 
-    await userSchemaModel.deleteOne({ _id });
-    res.status(200).json({ result: 'User deleted successfully' });
+    // 🔢 Auto increment numeric _id
+    const userList = await userSchemaModel.find().sort({ _id: -1 }).limit(1);
+    const _id = userList.length === 0 ? 1 : userList[0]._id + 1;
+
+    // 🔐 Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const userDetail = {
+      ...req.body,
+      email: email.toLowerCase(),
+      password: hashedPassword,
+      _id,
+      role: "user",
+      status: 0,
+      info: new Date().toISOString(),
+    };
+
+    await userSchemaModel.create(userDetail);
+
+    res.status(201).json({
+      success: true,
+      msg: "User registered successfully",
+    });
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ result: 'User deletion failed', error: err.message });
+    console.error("Register Error:", err);
+    res.status(500).json({
+      success: false,
+      msg: "Registration failed",
+      error: err.message,
+    });
   }
 };
 
+/* =========================
+   FETCH USERS
+========================= */
+export const fetch = async (req, res) => {
+  try {
+    const condition_obj = url.parse(req.url, true).query;
+    const users = await userSchemaModel.find(condition_obj);
 
-    // export const login =async(req,res)=>{
-    //     //console.log("h1");
-      
-    //   var userDetail = {...req.body,"status":1};        
-    //    //console.log(userDetail);
-    //  var userList =await userSchemaModel.find(userDetail);
-    //  //console.log(userList);
-    //  if(userList.length!=0)
-    //  {
-    //    const payload ={"subject":userList[0].email};
-    //    const token = jwt.sign(payload, process.env.JWT_SECRET);
-    //    res.status(200).json({"token":token,"userList":userList[0]}); 
-    //  }
-    //  else
-    //  {
-    //    res.status(500).json({"token":"token error"});
-    //  }
-    // }
+    if (users.length > 0) {
+      res.status(200).json(users);
+    } else {
+      res.status(404).json({ msg: "User not found" });
+    }
+  } catch (err) {
+    console.error("Fetch Error:", err);
+    res.status(500).json({ msg: "Fetch failed", error: err.message });
+  }
+};
 
-export const login = async(req,res)=>{
-  try{
-    const {email,password} =req.body;
+/* =========================
+   UPDATE USER
+========================= */
+export const update = async (req, res) => {
+  try {
+    const { condition_obj, content_obj } = req.body;
 
-    const user = await userSchemaModel.findOne({email});
-    if(!user){
-      return res.status(404).json({msg:"User not found"});
+    const user = await userSchemaModel.findOne(condition_obj);
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
     }
 
-    const isMatch = await bcrypt.compare(password,user.password);
-    if(!isMatch){
-      return res.status(401).json({msg:"invalif Password"});
+    // 🔐 If password updated → hash again
+    if (content_obj.password) {
+      content_obj.password = await bcrypt.hash(content_obj.password, 10);
     }
 
-    const token =jwt.sign(
-      {id:user._id,email:user.email},
+    const result = await userSchemaModel.updateOne(
+      condition_obj,
+      { $set: content_obj }
+    );
+
+    if (result.modifiedCount > 0) {
+      res.status(200).json({ msg: "User updated successfully" });
+    } else {
+      res.status(200).json({ msg: "No changes made" });
+    }
+
+  } catch (err) {
+    console.error("Update Error:", err);
+    res.status(500).json({ msg: "Update failed", error: err.message });
+  }
+};
+
+/* =========================
+   DELETE USER
+========================= */
+export const deleteUser = async (req, res) => {
+  try {
+    const { _id } = req.body;
+
+    const user = await userSchemaModel.findById(_id);
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    await userSchemaModel.deleteOne({ _id });
+
+    res.status(200).json({ msg: "User deleted successfully" });
+
+  } catch (err) {
+    console.error("Delete Error:", err);
+    res.status(500).json({ msg: "Deletion failed", error: err.message });
+  }
+};
+
+/* =========================
+   LOGIN USER
+========================= */
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await userSchemaModel.findOne({
+      email: email.toLowerCase(),
+    });
+
+    if (!user) {
+      return res.status(404).json({ msg: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ msg: "Invalid password" });
+    }
+
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
       process.env.JWT_SECRET,
-      {expiresIn:"1d"}
+      { expiresIn: "1d" }
     );
 
     res.status(200).json({
-      msg:"Login Successful",
-      token:token,
-      user:user
-    })
+      success: true,
+      msg: "Login successful",
+      token,
+      user,
+    });
 
-  }catch(err){
-    res.status(500).json({msg:"Login Failed ",error:err.message});
+  } catch (err) {
+    console.error("Login Error:", err);
+    res.status(500).json({ msg: "Login failed", error: err.message });
   }
-
 };

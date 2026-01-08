@@ -9,7 +9,7 @@ router.post("/register",userController.save);
 router.post("/save",userController.save);
 router.get("/fetch",userController.fetch);
 //router.patch("/update",userController.update);
-router.delete("/delete",userController.deletUser);
+router.delete("/delete",userController.deleteUser);
 router.post("/login",userController.login);
 
 
